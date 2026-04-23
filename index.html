@@ -49,6 +49,8 @@ const rivers = [
   {name: "Rhône", x: 300, y: 520}
 ];
 
+rivers.sort(() => Math.random() - 0.5);
+
 let current = 0;
 const container = document.getElementById("container");
 const questionEl = document.getElementById("question");
