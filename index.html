@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Europe Rivers Quiz (Clickable Dots)</title>
+<style>
+  body { font-family: Arial; text-align: center; }
+  #container { position: relative; display: inline-block; }
+  #map { width: 800px; }
+  .dot {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: red;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+  }
+  #question { font-size: 20px; margin: 20px; }
+  #result { font-size: 18px; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<h1>Europe Rivers Quiz</h1>
+<div id="question"></div>
+
+<div id="container">
+  <img id="map" src="map.jpg">
+</div>
+
+<div id="result"></div>
+
+<script>
+const rivers = [
+  {name: "Tagus (Tejo)", x: 70, y: 570},
+  {name: "Ebro", x: 230, y: 550},
+  {name: "Garonne", x: 210, y: 500},
+  {name: "Loire", x: 210, y: 450},
+  {name: "Rhen", x: 330, y: 360},
+  {name: "Elbe", x: 390, y: 360},
+  {name: "Oder", x: 420, y: 350},
+  {name: "wisla", x: 475, y: 340},
+  {name: "Volga", x: 800, y: 390},
+  {name: "Don", x: 750, y: 430},
+  {name: "Dnieper", x: 680, y: 460},
+  {name: "Donau", x: 620, y: 470},
+  {name: "Po", x: 370, y: 520},
+  {name: "Rhône", x: 300, y: 520}
+];
+
+let current = 0;
+const container = document.getElementById("container");
+const questionEl = document.getElementById("question");
+const resultEl = document.getElementById("result");
+
+// create dots
+rivers.forEach((river, index) => {
+  const dot = document.createElement("div");
+  dot.className = "dot";
+  dot.style.left = river.x + "px";
+  dot.style.top = river.y + "px";
+
+  dot.onclick = () => {
+    if (index === current) {
+      resultEl.innerText = "Correct!";
+      dot.style.background = "green";
+      current++;
+    } else {
+      resultEl.innerText = "Wrong!";
+      dot.style.background = "black";
+    }
+
+    setTimeout(() => {
+      resultEl.innerText = "";
+      askQuestion();
+    }, 800);
+  };
+
+  container.appendChild(dot);
+});
+
+function askQuestion() {
+  if (current >= rivers.length) {
+    questionEl.innerText = "Quiz finished!";
+    return;
+  }
+  questionEl.innerText = "Click the correct river: " + rivers[current].name;
+}
+
+askQuestion();
+</script>
+
+</body>
+</html>
